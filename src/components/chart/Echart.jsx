@@ -25,6 +25,7 @@ const Echart = () => {
     },
     yAxis: {
       type: "value",
+      position: 'right',
     },
     dataZoom: [
       {
@@ -38,12 +39,14 @@ const Echart = () => {
         type: "line",
         stack: "Total",
         data: [120, 132, 101, 134, 90, 230, 210],
+        itemStyle: {color: '#063970'}
       },
       {
         name: "Union Ads",
         type: "line",
         stack: "Total",
         data: [220, 182, 191, 234, 290, 330, 310],
+        itemStyle: {color: '#063970'}
       },
     ],
   };
