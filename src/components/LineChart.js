@@ -14,7 +14,7 @@ import Echart from "./chart/Echart";
 
 export const LineChart = () => {
   const [timeSelect, setTimeSelect] = useState("1Month");
-  const [chartDisplay, setChartDisplay] = useState("victory");
+  const [chartDisplay, setChartDisplay] = useState("echart");
   const handleTimeSelect = (_event, updateFormats) => {
     setTimeSelect(updateFormats);
     console.log(timeSelect);
@@ -41,10 +41,10 @@ export const LineChart = () => {
           อัตราผลตอบแทน
         </Typography>
         <Paper sx={{ marginY: "1rem", padding: "1rem" }}>
-          <ChartSelect
+          {/* <ChartSelect
             chartDisplay={chartDisplay}
             setChartDisplay={setChartDisplay}
-          />
+          /> */}
           {chartDisplay === "victory" ? (
             <VictoryChart />
           ) : chartDisplay === "chartjs" ? (

@@ -51,7 +51,7 @@ const Echart = () => {
   return (
     <>
       <Box>
-        <Typography mt={2} sx={{ textAlign: "center" }}>
+        <Typography mt={1} sx={{ textAlign: "center" }}>
           Sample Chart By Echart
         </Typography>
         <Box>

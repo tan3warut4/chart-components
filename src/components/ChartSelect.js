@@ -18,7 +18,7 @@ const ChartSelect = ({ chartDisplay, setChartDisplay }) => {
   return (
     <Stack
       direction="row"
-      sx={{ marginTop: "0.5rem", justifyContent: "center",martginBottom:"0.5rem" }}
+      sx={{ marginTop: "0.5rem", justifyContent: "center" }}
     >
       <ToggleButtonGroup
         sx={[
@@ -33,7 +33,7 @@ const ChartSelect = ({ chartDisplay, setChartDisplay }) => {
         onChange={handleChartSelect}
         exclusive
       >
-        <ToggleButton
+        {/* <ToggleButton
           disableFocusRipple={true}
           disableRipple={true}
           size="small"
@@ -88,7 +88,7 @@ const ChartSelect = ({ chartDisplay, setChartDisplay }) => {
           value="victory"
         >
           Victory
-        </ToggleButton>
+        </ToggleButton> */}
         <ToggleButton
           disableFocusRipple={true}
           disableRipple={true}
