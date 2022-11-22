@@ -25,7 +25,7 @@ function App() {
   return (
     <Container maxWidth="sm" sx={{ padding: 0 }}>
       <PageTitle/>
-      <Box sx={{ bgcolor: "#F5f5f5", height: "100vh", paddingX: "1rem" }}>
+      <Box sx={{ bgcolor: "#F5f5f5", height: "full", paddingX: "1rem" }}>
         <SearchBar />
         <BondChart />
         <LineChart />
