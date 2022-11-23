@@ -20,31 +20,11 @@ export const LineChart = () => {
     console.log(timeSelect);
   };
 
-  const data = [
-    { argument: "1 ตค 65", value: 4 },
-    { argument: "3 ตค 65", value: 4.5 },
-    { argument: "6 ตค 65", value: 6 },
-  ];
-
   return (
     <>
       <Container maxWidth="sm" sx={{ padding: 0 }}>
-        {/* <Typography
-          sx={{
-            fontSize: "1rem",
-            fontWeight: "bold",
-            marginBottom: "1rem",
-            textAlign: "start",
-            marginTop: "1rem",
-          }}
-        >
-          อัตราผลตอบแทน
-        </Typography> */}
+      
         <Paper sx={{ marginY: "1rem", padding: "1rem" }}>
-          {/* <ChartSelect
-            chartDisplay={chartDisplay}
-            setChartDisplay={setChartDisplay}
-          /> */}
           {chartDisplay === "victory" ? (
             <VictoryChart />
           ) : chartDisplay === "chartjs" ? (
