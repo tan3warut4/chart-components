@@ -15,7 +15,7 @@ const Echart = () => {
       right: "4%",
       bottom: "3%",
       containLabel: true,
-      show: true,
+
     },
 
     xAxis: {
@@ -40,6 +40,7 @@ const Echart = () => {
         stack: "Total",
         data: [120, 132, 101, 134, 90, 230, 210],
         itemStyle: {color: '#063970'}
+        ,smooth: true
       },
      
     ],
@@ -48,8 +49,8 @@ const Echart = () => {
   return (
     <>
       <Box>
-        <Typography mt={1} sx={{ textAlign: "center" }}>
-          Sample Chart By Echart
+        <Typography mt={1} sx={{ textAlign: "start",fontWeight:'bold' }}>
+          อัตราผลตอบแทน
         </Typography>
         <Box>
           <ReactEcharts option={option} style={{ height: "300px" }} />

@@ -29,7 +29,7 @@ export const LineChart = () => {
   return (
     <>
       <Container maxWidth="sm" sx={{ padding: 0 }}>
-        <Typography
+        {/* <Typography
           sx={{
             fontSize: "1rem",
             fontWeight: "bold",
@@ -39,7 +39,7 @@ export const LineChart = () => {
           }}
         >
           อัตราผลตอบแทน
-        </Typography>
+        </Typography> */}
         <Paper sx={{ marginY: "1rem", padding: "1rem" }}>
           {/* <ChartSelect
             chartDisplay={chartDisplay}
