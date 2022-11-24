@@ -4,7 +4,7 @@ import ReactEcharts from "echarts-for-react";
 import { useFetchData } from "../../hooks/useFetchData";
 import { graphic } from "echarts";
 import mockupData from "../../mockData/mockupData";
-
+import { ConvertDate } from "../../functions/convertDate";
 const Echart = () => {
   let dateData = [];
   let reverseDateData = [];
@@ -24,9 +24,16 @@ const Echart = () => {
       YData.push(avgYeildInfo);
     });
   };
+
   getDate(mockupData);
   getYData(mockupData);
+
+  let thaiDateFormatData = [];
   reverseDateData = dateData.reverse();
+  reverseDateData.map((date) => {
+    thaiDateFormatData.push(ConvertDate(date));
+  });
+
   maxValue = Math.round((YData.reduce((a, b) => a + b, 0) * 2) / YData.length);
 
   // const { isLoading, isError, data, isFetched } = useFetchData();
@@ -57,7 +64,7 @@ const Echart = () => {
     xAxis: {
       type: "category",
       boundaryGap: false,
-      data: reverseDateData,
+      data: thaiDateFormatData,
     },
     yAxis: {
       type: "value",
