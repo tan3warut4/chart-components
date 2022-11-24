@@ -21,7 +21,9 @@ const Echart = () => {
       let yeildInfo =
         parseFloat(yeildData.bid_yield) + parseFloat(yeildData.offer_yield);
       let avgYeildInfo = yeildInfo / 2;
-      YData.push(avgYeildInfo);
+      let avgYeildInfoWithTwoDecimal = parseFloat(avgYeildInfo.toFixed(2))
+      console.log(typeof avgYeildInfoWithTwoDecimal)
+      YData.push(avgYeildInfoWithTwoDecimal);
     });
   };
 
@@ -54,6 +56,12 @@ const Echart = () => {
   const option = {
     tooltip: {
       trigger: "item",
+      backgroundColor: "#F1f1f1",
+      borderColor: "#F1f1f1",
+      extraCssText: "text-align: center;",
+      position: "top",
+      formatter: "{b}<br/>{c} %",
+      valueFormatter: (value) => value.toFixed(2) + "%",
     },
     grid: {
       left: "3%",
@@ -96,11 +104,12 @@ const Echart = () => {
     ],
     series: [
       {
-        name: "",
+        name: "date",
         type: "line",
         data: YData,
         itemStyle: { color: "#063970" },
         smooth: true,
+
         areaStyle: {
           color: new graphic.LinearGradient(0, 0, 0, 1, [
             {
