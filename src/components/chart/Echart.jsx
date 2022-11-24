@@ -1,42 +1,48 @@
-import React from "react";
+import { useEffect } from "react";
 import { Typography, Box } from "@mui/material";
 import ReactEcharts from "echarts-for-react";
 import { useFetchData } from "../../hooks/useFetchData";
 import { graphic } from "echarts";
+import mockupData from "../../mockData/mockupData";
 
 const Echart = () => {
   let dateData = [];
   let reverseDateData = [];
   let YData = [];
   let maxValue;
+
   const getDate = (data) => {
-    data.data.map((yeildData) => {
+    data.map((yeildData) => {
       dateData.push(yeildData.settlement_date);
     });
   };
   const getYData = (data) => {
-    data.data.map((yeildData) => {
+    data.map((yeildData) => {
       let yeildInfo =
         parseFloat(yeildData.bid_yield) + parseFloat(yeildData.offer_yield);
       let avgYeildInfo = yeildInfo / 2;
       YData.push(avgYeildInfo);
     });
   };
+  getDate(mockupData);
+  getYData(mockupData);
+  reverseDateData = dateData.reverse();
+  maxValue = Math.round((YData.reduce((a, b) => a + b, 0) * 2) / YData.length);
 
-  const { isLoading, isError, data, isFetched } = useFetchData();
-  if (isLoading) {
-    console.log("Data is loading...");
-  } else if (isError) {
-    console.log("Data fetching error....");
-  } else if (isFetched) {
-    console.log("Data fetched successfuly");
-    getDate(data);
-    getYData(data);
-    reverseDateData = dateData.reverse();
-    maxValue = Math.round(
-      (YData.reduce((a, b) => a + b, 0) * 2) / YData.length
-    );
-  }
+  // const { isLoading, isError, data, isFetched } = useFetchData();
+  // if (isLoading) {
+  //   console.log("Data is loading...");
+  // } else if (isError) {
+  //   console.log("Data fetching error....");
+  // } else if (isFetched) {
+  //   console.log("Data fetched successfuly");
+  //   getDate(data);
+  //   getYData(data);
+  //   reverseDateData = dateData.reverse();
+  //   maxValue = Math.round(
+  //     (YData.reduce((a, b) => a + b, 0) * 2) / YData.length
+  //   );
+  // }
 
   const option = {
     tooltip: {
@@ -60,27 +66,26 @@ const Echart = () => {
         formatter: "{value} %",
       },
       min: 0,
-      max: maxValue-1,
+      max: maxValue - 1,
     },
     dataZoom: [
-      { 
-        id: 'dataZoomY',
+      {
+        id: "dataZoomY",
         type: "inside",
         throttle: 150,
-        minSpan:40,
-        orient:"vertical",
+        minSpan: 40,
+        orient: "vertical",
         yAxisIndex: [0],
-        filterMode: 'weakFilter',
-
+        filterMode: "weakFilter",
       },
       {
-        id: 'dataZoomX',
-        type: 'inside',
+        id: "dataZoomX",
+        type: "inside",
         xAxisIndex: [0],
-        filterMode: 'filter',
-        orient:"horizontal",
-        minValueSpan:2
-    },
+        filterMode: "filter",
+        orient: "horizontal",
+        minValueSpan: 2,
+      },
     ],
     series: [
       {
