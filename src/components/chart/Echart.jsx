@@ -22,7 +22,6 @@ const Echart = () => {
         parseFloat(yeildData.bid_yield) + parseFloat(yeildData.offer_yield);
       let avgYeildInfo = yeildInfo / 2;
       let avgYeildInfoWithTwoDecimal = parseFloat(avgYeildInfo.toFixed(2))
-      console.log(typeof avgYeildInfoWithTwoDecimal)
       YData.push(avgYeildInfoWithTwoDecimal);
     });
   };
