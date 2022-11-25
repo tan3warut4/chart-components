@@ -1,41 +1,74 @@
-import { useEffect } from "react";
 import { Typography, Box } from "@mui/material";
 import ReactEcharts from "echarts-for-react";
-import { useFetchData } from "../../hooks/useFetchData";
 import { graphic } from "echarts";
 import mockupData from "../../mockData/mockupData";
 import { ConvertDate } from "../../functions/convertDate";
-const Echart = () => {
-  let dateData = [];
-  let reverseDateData = [];
-  let YData = [];
-  let maxValue;
+import { TimeRangeSelectData } from "../../functions/timeRageSelectData";
+import { TimeRangeSelectDate } from "../../functions/timeRangeSelectDate";
+import { useEffect, useState } from "react";
+
+const Echart = ({ timeSelect }) => {
+  const [YData, setYData] = useState([]);
+  const [reverseDateData, setReverseDateData] = useState([]);
+  const [thaiDateFormatData, setThaiDateFormatData] = useState([]);
+  const [maxValue, setMaxValue] = useState();
+  const [currentYData, setCurrentYData] = useState([]);
+  const [currentThaiDateFormatData, setCurrentThaiDateFormatData] = useState(
+    []
+  );
+  // get X and Y axis data function
+
+  useEffect(() => {
+    setCurrentYData(TimeRangeSelectData(timeSelect, YData));
+    setCurrentThaiDateFormatData(
+      TimeRangeSelectDate(timeSelect, thaiDateFormatData)
+    );
+  }, [timeSelect]);
+
+  useEffect(() => {
+    setMaxValue(
+      Math.round((currentYData.reduce((a, b) => a + b, 0) * 2) / currentYData.length)
+    );
+  }, [currentYData]);
+
+  const getThaiDate = (data) => {
+    const result = data.map((date) => {
+      return ConvertDate(date);
+    });
+    return result;
+  };
+
+  useEffect(() => {
+    setYData(getYData(mockupData));
+    setThaiDateFormatData(getThaiDate(getDate(mockupData)));
+    setCurrentYData(TimeRangeSelectData("oneMonth", getYData(mockupData)));
+    setCurrentThaiDateFormatData(
+      TimeRangeSelectDate("oneMonth", getThaiDate(getDate(mockupData)))
+    );
+  }, []);
+
+  
 
   const getDate = (data) => {
-    data.map((yeildData) => {
-      dateData.push(yeildData.settlement_date);
+    const result = data.map((yeildData) => {
+      return yeildData.settlement_date;
     });
+    return result.reverse();
   };
+
   const getYData = (data) => {
-    data.map((yeildData) => {
+    const result = data.map((yeildData) => {
       let yeildInfo =
         parseFloat(yeildData.bid_yield) + parseFloat(yeildData.offer_yield);
       let avgYeildInfo = yeildInfo / 2;
-      let avgYeildInfoWithTwoDecimal = parseFloat(avgYeildInfo.toFixed(2))
-      YData.push(avgYeildInfoWithTwoDecimal);
+      let avgYeildInfoWithTwoDecimal = parseFloat(avgYeildInfo.toFixed(2));
+      return avgYeildInfoWithTwoDecimal;
     });
+    return result;
   };
 
-  getDate(mockupData);
-  getYData(mockupData);
-
-  let thaiDateFormatData = [];
-  reverseDateData = dateData.reverse();
-  reverseDateData.map((date) => {
-    thaiDateFormatData.push(ConvertDate(date));
-  });
-
-  maxValue = Math.round((YData.reduce((a, b) => a + b, 0) * 2) / YData.length);
+  // calculate max value of Y axis
+  // maxValue = Math.round((YData.reduce((a, b) => a + b, 0) * 2) / YData.length);
 
   // const { isLoading, isError, data, isFetched } = useFetchData();
   // if (isLoading) {
@@ -71,7 +104,7 @@ const Echart = () => {
     xAxis: {
       type: "category",
       boundaryGap: false,
-      data: thaiDateFormatData,
+      data: currentThaiDateFormatData,
     },
     yAxis: {
       type: "value",
@@ -105,7 +138,7 @@ const Echart = () => {
       {
         name: "date",
         type: "line",
-        data: YData,
+        data: currentYData,
         itemStyle: { color: "#063970" },
         smooth: true,
 
@@ -139,6 +172,7 @@ const Echart = () => {
       },
     ],
   };
+  let chart = <ReactEcharts option={option} style={{ height: "300px" }} />;
 
   return (
     <>
@@ -146,9 +180,7 @@ const Echart = () => {
         <Typography mt={1} sx={{ textAlign: "start", fontWeight: "bold" }}>
           อัตราผลตอบแทน
         </Typography>
-        <Box>
-          <ReactEcharts option={option} style={{ height: "300px" }} />
-        </Box>
+        <Box>{chart}</Box>
       </Box>
     </>
   );

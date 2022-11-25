@@ -1,37 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import {
   Paper,
   Container,
-  Typography,
   Stack,
   ToggleButtonGroup,
   ToggleButton,
 } from "@mui/material";
-import ChartSelect from "./ChartSelect";
-import VictoryChart from "./chart/VictoryChart";
-import ChartPluginZoom from "./chart/ChartPluginZoom";
 import Echart from "./chart/Echart";
 
 export const LineChart = () => {
-  const [timeSelect, setTimeSelect] = useState("1Month");
-  const [chartDisplay, setChartDisplay] = useState("echart");
+  const [timeSelect, setTimeSelect] = useState("oneMonth");
   const handleTimeSelect = (_event, updateFormats) => {
-    setTimeSelect(updateFormats);
-    console.log(timeSelect);
+    if(updateFormats!=null){
+      setTimeSelect(updateFormats);
+    }
   };
 
   return (
     <>
       <Container maxWidth="sm" sx={{ padding: 0 }}>
-      
         <Paper sx={{ marginY: "1rem", padding: "1rem" }}>
-          {chartDisplay === "victory" ? (
-            <VictoryChart />
-          ) : chartDisplay === "chartjs" ? (
-            <ChartPluginZoom />
-          ) : (
-            <Echart />
-          )}
+
+            <Echart timeSelect={timeSelect} />
           <Stack
             direction="row"
             sx={{ marginTop: "1rem", justifyContent: "center" }}
@@ -73,7 +63,7 @@ export const LineChart = () => {
                     },
                   },
                 ]}
-                value="1week"
+                value="oneWeek"
               >
                 1 สัปดาห์
               </ToggleButton>
@@ -101,7 +91,7 @@ export const LineChart = () => {
                     },
                   },
                 ]}
-                value="1month"
+                value="oneMonth"
               >
                 1 เดือน
               </ToggleButton>
@@ -129,7 +119,7 @@ export const LineChart = () => {
                     },
                   },
                 ]}
-                value="3month"
+                value="threeMonth"
               >
                 3 เดือน
               </ToggleButton>
