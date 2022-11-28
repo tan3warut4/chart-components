@@ -53,7 +53,7 @@ const Echart = ({ timeSelect }) => {
     const result = data.map((yeildData) => {
       return yeildData.settlement_date;
     });
-    return result.reverse();
+    return result
   };
 
   const getYData = (data) => {
@@ -96,7 +96,7 @@ const Echart = ({ timeSelect }) => {
       valueFormatter: (value) => value.toFixed(2) + "%",
     },
     grid: {
-      left: "3%",
+      left: "6%",
       right: "4%",
       bottom: "3%",
       containLabel: true,
@@ -105,6 +105,9 @@ const Echart = ({ timeSelect }) => {
       type: "category",
       boundaryGap: false,
       data: currentThaiDateFormatData,
+      nameTextStyle: {
+        fontSize: 10
+      }
     },
     yAxis: {
       type: "value",
@@ -141,7 +144,7 @@ const Echart = ({ timeSelect }) => {
         data: currentYData,
         itemStyle: { color: "#063970" },
         smooth: true,
-
+        symbolSize: 8,
         areaStyle: {
           color: new graphic.LinearGradient(0, 0, 0, 1, [
             {
