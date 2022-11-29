@@ -164,7 +164,7 @@ const mockupData = [
   {
     thai_symbol: "CPALL275B",
     settlement_date: "24/7/2022",
-    status: "inactive",
+    status: "active",
     bid_yield: "5.25",
     offer_yield: "2.55",
   },

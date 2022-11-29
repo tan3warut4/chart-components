@@ -5,17 +5,46 @@ import mockupData from "../../mockData/mockupData";
 import { ConvertDate } from "../../functions/convertDate";
 import { TimeRangeSelectData } from "../../functions/timeRageSelectData";
 import { TimeRangeSelectDate } from "../../functions/timeRangeSelectDate";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const Echart = ({ timeSelect }) => {
+  console.log(timeSelect)
+  const getYData = (data) => {
+    const result = data.map((yeildData) => {
+      let yeildInfo =
+        parseFloat(yeildData.bid_yield) + parseFloat(yeildData.offer_yield);
+      let avgYeildInfo = yeildInfo / 2;
+      let avgYeildInfoWithTwoDecimal = parseFloat(avgYeildInfo.toFixed(2));
+      return avgYeildInfoWithTwoDecimal;
+    });
+    return result;
+  };
+
+  const getThaiDate = (data) => {
+    const result = data.map((date) => {
+      return ConvertDate(date);
+    });
+    return result;
+  };
+
+  const getDate = useCallback((data) => {
+    const result = data.map((yeildData) => {
+      return yeildData.settlement_date;
+    });
+    return result;
+  }, []);
+
+  const initCurrentYData = () => {
+    return getYData(mockupData);
+  };
   const [YData, setYData] = useState([]);
-  const [reverseDateData, setReverseDateData] = useState([]);
   const [thaiDateFormatData, setThaiDateFormatData] = useState([]);
-  const [maxValue, setMaxValue] = useState();
-  const [currentYData, setCurrentYData] = useState([]);
+  const [maxValue, setMaxValue] = useState("12");
+  const [currentYData, setCurrentYData] = useState(initCurrentYData());
   const [currentThaiDateFormatData, setCurrentThaiDateFormatData] = useState(
-    []
+    TimeRangeSelectDate("oneMonth", getThaiDate(getDate(mockupData)))
   );
+
   // get X and Y axis data function
 
   useEffect(() => {
@@ -27,16 +56,11 @@ const Echart = ({ timeSelect }) => {
 
   useEffect(() => {
     setMaxValue(
-      Math.round((currentYData.reduce((a, b) => a + b, 0) * 2) / currentYData.length)
+      Math.round(
+        (currentYData.reduce((a, b) => a + b, 0) * 2) / currentYData.length
+      )
     );
   }, [currentYData]);
-
-  const getThaiDate = (data) => {
-    const result = data.map((date) => {
-      return ConvertDate(date);
-    });
-    return result;
-  };
 
   useEffect(() => {
     setYData(getYData(mockupData));
@@ -46,26 +70,6 @@ const Echart = ({ timeSelect }) => {
       TimeRangeSelectDate("oneMonth", getThaiDate(getDate(mockupData)))
     );
   }, []);
-
-  
-
-  const getDate = (data) => {
-    const result = data.map((yeildData) => {
-      return yeildData.settlement_date;
-    });
-    return result
-  };
-
-  const getYData = (data) => {
-    const result = data.map((yeildData) => {
-      let yeildInfo =
-        parseFloat(yeildData.bid_yield) + parseFloat(yeildData.offer_yield);
-      let avgYeildInfo = yeildInfo / 2;
-      let avgYeildInfoWithTwoDecimal = parseFloat(avgYeildInfo.toFixed(2));
-      return avgYeildInfoWithTwoDecimal;
-    });
-    return result;
-  };
 
   // calculate max value of Y axis
   // maxValue = Math.round((YData.reduce((a, b) => a + b, 0) * 2) / YData.length);
@@ -86,6 +90,11 @@ const Echart = ({ timeSelect }) => {
   // }
 
   const option = {
+    toolbox: {
+      feature: {
+        restore: {},
+      },
+    },
     tooltip: {
       trigger: "item",
       backgroundColor: "#F1f1f1",
@@ -106,8 +115,8 @@ const Echart = ({ timeSelect }) => {
       boundaryGap: false,
       data: currentThaiDateFormatData,
       nameTextStyle: {
-        fontSize: 10
-      }
+        fontSize: 10,
+      },
     },
     yAxis: {
       type: "value",
@@ -134,7 +143,7 @@ const Echart = ({ timeSelect }) => {
         xAxisIndex: [0],
         filterMode: "filter",
         orient: "horizontal",
-        minValueSpan: 2,
+        minValueSpan: 1,
       },
     ],
     series: [
@@ -175,14 +184,19 @@ const Echart = ({ timeSelect }) => {
       },
     ],
   };
+
   let chart = <ReactEcharts option={option} style={{ height: "300px" }} />;
 
   return (
     <>
       <Box>
-        <Typography mt={1} sx={{ textAlign: "start", fontWeight: "bold" }}>
-          อัตราผลตอบแทน
-        </Typography>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box>
+            <Typography mt={1} sx={{ textAlign: "start", fontWeight: "bold" }}>
+              อัตราผลตอบแทน
+            </Typography>
+          </Box>
+        </Box>
         <Box>{chart}</Box>
       </Box>
     </>
