@@ -15,7 +15,6 @@ function App() {
     document.title = "Chart components demostration";
   }, []);
   
-  
   return (
     <Container maxWidth="sm" sx={{ padding: 0 }}>
       <PageTitle/>

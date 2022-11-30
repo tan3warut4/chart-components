@@ -17,8 +17,8 @@ const Echart = ({ timeSelect, handleRestore }) => {
   const [currentThaiDateFormatData, setCurrentThaiDateFormatData] = useState(
     TimeRangeSelectDate(timeSelect, getThaiDate(getDate(mockupData)))
   );
-  const [maxValue, setMaxValue] = useState(
-    Math.round((YData.reduce((a, b) => a + b, 0) * 2) / currentYData.length)
+  const [maxValue, setMaxValue] = useState(12
+    // Math.round((YData.reduce((a, b) => a + b, 0) * 2) / currentYData.length)
   );
 
   useEffect(() => {
@@ -26,6 +26,7 @@ const Echart = ({ timeSelect, handleRestore }) => {
     setCurrentThaiDateFormatData(
       TimeRangeSelectDate(timeSelect, thaiDateFormatData)
     );
+  
   }, [timeSelect, YData, thaiDateFormatData]);
 
   useEffect(() => {
