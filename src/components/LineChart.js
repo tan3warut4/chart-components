@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useCallback } from "react";
+import React, { useState } from "react";
 import {
   Paper,
   Container,
@@ -10,18 +10,21 @@ import Echart from "./chart/Echart";
 
 export const LineChart = () => {
   const [timeSelect, setTimeSelect] = useState("oneMonth");
-  const handleTimeSelect = useCallback((_event, updateFormats) => {
+
+  const handleTimeSelect = (_event, updateFormats) => {
     if (updateFormats != null) {
       setTimeSelect(updateFormats);
     }
-  },[timeSelect])
- 
+  }
+ const restoreChart = ()=>{
+  setTimeSelect("oneMonth")
+ }
 
   return (
     <>
       <Container maxWidth="sm" sx={{ padding: 0 }}>
         <Paper sx={{ marginY: "1rem", padding: "1rem" }}>
-        <Echart timeSelect={timeSelect}  />
+        <Echart timeSelect={timeSelect} handleRestore={restoreChart} />
           <Stack
             direction="row"
             sx={{ marginTop: "1rem", justifyContent: "center" }}

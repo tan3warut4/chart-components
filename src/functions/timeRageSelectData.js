@@ -1,10 +1,10 @@
-export  const TimeRangeSelectData = (range, data) => {
+export const TimeRangeSelectData = (range, data) => {
   if (range === "oneWeek") {
     let result = [];
     for (let i = 0; i < 7; i++) {
       result.push(data[i]);
     }
-    // console.log(result);
+
     return result;
   }
   if (range === "oneMonth") {
@@ -12,7 +12,7 @@ export  const TimeRangeSelectData = (range, data) => {
     for (let i = 0; i < 30; i++) {
       result.push(data[i]);
     }
-    // console.log(result);
+
     return result;
   }
   if (range === "threeMonth") {
@@ -20,8 +20,7 @@ export  const TimeRangeSelectData = (range, data) => {
     for (let i = 0; i < 90; i++) {
       result.push(data[i]);
     }
-    // console.log(result);
+
     return result;
   }
 };
-

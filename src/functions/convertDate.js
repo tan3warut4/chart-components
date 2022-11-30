@@ -21,3 +21,10 @@ export const ConvertDate = (data) => {
   date += " " + month;
   return date;
 };
+
+export const getThaiDate = (data) => {
+    const result = data.map((date) => {
+      return ConvertDate(date);
+    });
+    return result;
+  };
