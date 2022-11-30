@@ -1,16 +1,16 @@
-import Paper from '@mui/material/Paper';
+
 import Card from '@mui/material/Card';
-import react from 'react'
+
 import Typography from '@mui/material/Typography';
-import { Box, Container } from '@mui/system';
+import { Box } from '@mui/system';
 import { Avatar, CardActions, CardContent, CardHeader, Grid } from '@mui/material';
 
 
 export const BondChart = () => {
     return (
         <>
-            <Container sx={{ }}>
-                <Grid container>
+        
+                <Grid container sx={{justifyContent:"center"}}>
                     <Grid item>
                         <Card sx={{ display: 'flex', borderRadius: '12px', }} >
                             <Box sx={{ alignSelf: 'center', paddingX: '1rem' }}>
@@ -33,7 +33,6 @@ export const BondChart = () => {
                         </Card>
                     </Grid>
                 </Grid>
-            </Container>
         </>
     )
 }
