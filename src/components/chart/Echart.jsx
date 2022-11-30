@@ -6,14 +6,11 @@ import { getThaiDate } from "../../functions/convertDate";
 import { getDate, getYData } from "../../functions/convertData";
 import { TimeRangeSelectData } from "../../functions/timeRageSelectData";
 import { TimeRangeSelectDate } from "../../functions/timeRangeSelectDate";
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const Echart = ({ timeSelect, handleRestore }) => {
-  const [YData, setYData] = useState(getYData(mockupData));
-  const [thaiDateFormatData, setThaiDateFormatData] = useState(
-    getThaiDate(getDate(mockupData))
-  );
-
+  const [YData] = useState(getYData(mockupData));
+  const [thaiDateFormatData] = useState(getThaiDate(getDate(mockupData)));
   const [currentYData, setCurrentYData] = useState(
     TimeRangeSelectData(timeSelect, getYData(mockupData))
   );
@@ -23,14 +20,12 @@ const Echart = ({ timeSelect, handleRestore }) => {
   const [maxValue, setMaxValue] = useState(
     Math.round((YData.reduce((a, b) => a + b, 0) * 2) / currentYData.length)
   );
-  // get X and Y axis data function
 
   useEffect(() => {
     setCurrentYData(TimeRangeSelectData(timeSelect, YData));
     setCurrentThaiDateFormatData(
       TimeRangeSelectDate(timeSelect, thaiDateFormatData)
     );
-   
   }, [timeSelect, YData, thaiDateFormatData]);
 
   useEffect(() => {
@@ -40,6 +35,10 @@ const Echart = ({ timeSelect, handleRestore }) => {
       )
     );
   }, [currentYData]);
+
+  const onChartClick = useCallback(() => {
+    handleRestore("oneMonth");
+  }, [handleRestore]);
 
   // calculate max value of Y axis
   // maxValue = Math.round((YData.reduce((a, b) => a + b, 0) * 2) / YData.length);
@@ -59,75 +58,88 @@ const Echart = ({ timeSelect, handleRestore }) => {
   //   );
   // }
 
-  const option ={
- 
-      toolbox: {
-        feature: {
-          restore: {
-            title:''
-          },
+  const option = {
+    toolbox: {
+      feature: {
+        restore: {
+          title: "",
         },
       },
-      tooltip: {
-        trigger: "item",
-        backgroundColor: "#F1f1f1",
-        borderColor: "#F1f1f1",
-        extraCssText: "text-align: center;",
-        position: "top",
-        formatter: "{b}<br/>{c} %",
-        valueFormatter: (value) => value.toFixed(2) + "%",
+    },
+    tooltip: {
+      trigger: "item",
+      backgroundColor: "#F1f1f1",
+      borderColor: "#F1f1f1",
+      extraCssText: "text-align: center;",
+      position: "top",
+      formatter: "{b}<br/>{c} %",
+      valueFormatter: (value) => value.toFixed(2) + "%",
+    },
+    grid: {
+      left: "6%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true,
+    },
+    xAxis: {
+      type: "category",
+      boundaryGap: false,
+      data: currentThaiDateFormatData,
+      nameTextStyle: {
+        fontSize: 10,
       },
-      grid: {
-        left: "6%",
-        right: "4%",
-        bottom: "3%",
-        containLabel: true,
+    },
+    yAxis: {
+      type: "value",
+      position: "right",
+      axisLabel: {
+        formatter: "{value} %",
       },
-      xAxis: {
-        type: "category",
-        boundaryGap: false,
-        data: currentThaiDateFormatData,
-        nameTextStyle: {
-          fontSize: 10,
-        },
+      min: 0,
+      max: maxValue - 1,
+    },
+    dataZoom: [
+      {
+        id: "dataZoomY",
+        type: "inside",
+        throttle: 150,
+        minSpan: 40,
+        orient: "vertical",
+        yAxisIndex: [0],
+        filterMode: "weakFilter",
       },
-      yAxis: {
-        type: "value",
-        position: "right",
-        axisLabel: {
-          formatter: "{value} %",
-        },
-        min: 0,
-        max: maxValue - 1,
+      {
+        id: "dataZoomX",
+        type: "inside",
+        xAxisIndex: [0],
+        filterMode: "filter",
+        orient: "horizontal",
+        minValueSpan: 1,
       },
-      dataZoom: [
-        {
-          id: "dataZoomY",
-          type: "inside",
-          throttle: 150,
-          minSpan: 40,
-          orient: "vertical",
-          yAxisIndex: [0],
-          filterMode: "weakFilter",
+    ],
+    series: [
+      {
+        name: "date",
+        type: "line",
+        data: currentYData,
+        itemStyle: { color: "#063970" },
+        smooth: true,
+        symbolSize: 8,
+        areaStyle: {
+          color: new graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: "rgba(207, 229, 255, 0.8)",
+            },
+            {
+              offset: 1,
+              color: "#ffffff",
+            },
+          ]),
         },
-        {
-          id: "dataZoomX",
-          type: "inside",
-          xAxisIndex: [0],
-          filterMode: "filter",
-          orient: "horizontal",
-          minValueSpan: 1,
-        },
-      ],
-      series: [
-        {
-          name: "date",
-          type: "line",
-          data: currentYData,
-          itemStyle: { color: "#063970" },
-          smooth: true,
-          symbolSize: 8,
+        emphasis: {
           areaStyle: {
+            //--> to avoid the fade effect, set the same color
             color: new graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
@@ -139,40 +151,12 @@ const Echart = ({ timeSelect, handleRestore }) => {
               },
             ]),
           },
-          emphasis: {
-            areaStyle: {
-              //--> to avoid the fade effect, set the same color
-              color: new graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: "rgba(207, 229, 255, 0.8)",
-                },
-                {
-                  offset: 1,
-                  color: "#ffffff",
-                },
-              ]),
-            },
-          },
         },
-      ],
-    };
-  
+      },
+    ],
+  };
 
-  const onChartClick = useCallback((obj) => {
-    handleRestore("oneMonth");
-  }, []);
-
-  let chart = (
-    <ReactEcharts
-      key={timeSelect}
-      onEvents={{
-        restore: onChartClick,
-      }}
-      option={option}
-      style={{ height: "300px" }}
-    />
-  );
+ 
 
   return (
     <>
@@ -184,7 +168,9 @@ const Echart = ({ timeSelect, handleRestore }) => {
             </Typography>
           </Box>
         </Box>
-        <Box>{chart}</Box>
+        <Box>
+          <ReactEcharts key={timeSelect}  onEvents={{restore: onChartClick,}} option={option} style={{ height: "300px" }} />
+        </Box>
       </Box>
     </>
   );
