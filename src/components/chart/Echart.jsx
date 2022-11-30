@@ -17,16 +17,20 @@ const Echart = ({ timeSelect, handleRestore }) => {
   const [currentThaiDateFormatData, setCurrentThaiDateFormatData] = useState(
     TimeRangeSelectDate(timeSelect, getThaiDate(getDate(mockupData)))
   );
-  const [maxValue, setMaxValue] = useState(12
+  const [maxValue, setMaxValue] = useState(
+    12
     // Math.round((YData.reduce((a, b) => a + b, 0) * 2) / currentYData.length)
   );
+
+  const onChartClick = useCallback(() => {
+    handleRestore("oneMonth");
+  }, [handleRestore]);
 
   useEffect(() => {
     setCurrentYData(TimeRangeSelectData(timeSelect, YData));
     setCurrentThaiDateFormatData(
       TimeRangeSelectDate(timeSelect, thaiDateFormatData)
     );
-  
   }, [timeSelect, YData, thaiDateFormatData]);
 
   useEffect(() => {
@@ -36,10 +40,6 @@ const Echart = ({ timeSelect, handleRestore }) => {
       )
     );
   }, [currentYData]);
-
-  const onChartClick = useCallback(() => {
-    handleRestore("oneMonth");
-  }, [handleRestore]);
 
   // calculate max value of Y axis
   // maxValue = Math.round((YData.reduce((a, b) => a + b, 0) * 2) / YData.length);
@@ -157,8 +157,6 @@ const Echart = ({ timeSelect, handleRestore }) => {
     ],
   };
 
- 
-
   return (
     <>
       <Box>
@@ -170,7 +168,12 @@ const Echart = ({ timeSelect, handleRestore }) => {
           </Box>
         </Box>
         <Box>
-          <ReactEcharts key={timeSelect}  onEvents={{restore: onChartClick,}} option={option} style={{ height: "300px" }} />
+          <ReactEcharts
+            key={timeSelect}
+            onEvents={{ restore: onChartClick }}
+            option={option}
+            style={{ height: "300px" }}
+          />
         </Box>
       </Box>
     </>
