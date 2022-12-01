@@ -25,6 +25,9 @@ const Echart = ({ timeSelect, handleRestore }) => {
   const onChartClick = useCallback(() => {
     handleRestore("oneMonth");
     setCurrentYData(TimeRangeSelectData(timeSelect, YData));
+    setCurrentThaiDateFormatData(
+      TimeRangeSelectDate(timeSelect, thaiDateFormatData)
+    );
   }, [handleRestore, YData, timeSelect]);
 
   useEffect(() => {
