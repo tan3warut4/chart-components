@@ -3,7 +3,7 @@ import { Box ,Container} from "@mui/system"
 
 export const Overall = () => {
     return (
-        <Container>
+        <>
             <Typography sx={{ fontSize: "1rem", fontWeight: 'bold' ,marginBottom:'1rem', textAlign:'start'}}>
                 มูลค่าผลตอบแทนย้อนหลัง
             </Typography>
@@ -33,6 +33,6 @@ export const Overall = () => {
                     </Typography>
                 </Box>
             </Box>
-        </Container>
+        </>
     )
 }

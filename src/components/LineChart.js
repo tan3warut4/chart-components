@@ -22,7 +22,7 @@ export const LineChart = () => {
 
   return (
     <>
-      <Container maxWidth="sm" sx={{ padding: 0 }}>
+      {/* <Container maxWidth="sm" sx={{ padding: 0 }}> */}
         <Paper sx={{ marginY: "1rem", padding: "1rem" }}>
         <Echart timeSelect={timeSelect} handleRestore={restoreChart} />
           <Stack
@@ -129,7 +129,7 @@ export const LineChart = () => {
             </ToggleButtonGroup>
           </Stack>
         </Paper>
-      </Container>
+      {/* </Container> */}
     </>
   );
 };

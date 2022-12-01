@@ -2,7 +2,7 @@ import { Box, Typography, Container } from "@mui/material";
 
 export const BondDetail = () => {
   return (
-    <Container>
+    <>
       <Typography
         sx={{ fontSize: "1rem", fontWeight: "bold", textAlign: "start" }}
       >
@@ -48,6 +48,6 @@ export const BondDetail = () => {
           <Typography>24 มค. 2565</Typography>
         </Box>
       </Box>
-    </Container>
+    </>
   );
 };
