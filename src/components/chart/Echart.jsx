@@ -24,7 +24,8 @@ const Echart = ({ timeSelect, handleRestore }) => {
 
   const onChartClick = useCallback(() => {
     handleRestore("oneMonth");
-  }, [handleRestore]);
+    setCurrentYData(TimeRangeSelectData(timeSelect, YData));
+  }, [handleRestore, YData, timeSelect]);
 
   useEffect(() => {
     setCurrentYData(TimeRangeSelectData(timeSelect, YData));
@@ -97,7 +98,7 @@ const Echart = ({ timeSelect, handleRestore }) => {
         formatter: "{value} %",
       },
       min: 0,
-      max: maxValue - 1,
+      max: maxValue,
     },
     dataZoom: [
       {
