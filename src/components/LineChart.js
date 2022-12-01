@@ -34,7 +34,7 @@ export const LineChart = () => {
                 { backgroundColor: "#f7f7f7", borderRadius: "30px" },
                 {
                   ".MuiToggleButtonGroup-grouped": {
-                    borderRadius: " 21px",
+                    borderRadius: " 21px!important",
                   },
                 },
               ]}
@@ -61,7 +61,7 @@ export const LineChart = () => {
                         borderRadius: " 21px",
                       },
                       "&.MuiToggleButtonGroup-grouped:not(:last-of-type)": {
-                        borderRadius: "21px",
+                        borderRadius: "21px!important",
                       },
                     },
                   },
@@ -86,10 +86,15 @@ export const LineChart = () => {
                         color: "#063970",
                         backgroundColor: "white",
                         boxShadow: "0px -1px 29px 1px rgb(0 0 0 / 10%)",
-                        borderRadius: " 21px",
+                        borderRadius: "21px",
                       },
                       "&.MuiToggleButtonGroup-grouped:not(:last-of-type)": {
-                        borderRadius: " 21px",
+                        borderRadius: "21pximportant",
+                      },
+                      "&.css-1xtxb8q-MuiButtonBase-root-MuiToggleButton-root:hover": {
+                        borderTopLeftRadius:"21px",
+                        borderBottomLeftRadius:"21px",
+                        borderRadius: "21px",
                       },
                     },
                   },
