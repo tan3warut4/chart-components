@@ -64,10 +64,16 @@ const Echart = ({ timeSelect, handleRestore }) => {
   // }
 
   const option = {
+    title: {
+      text: 'อัตราผลตอบแทน',
+      textStyle: {
+        lineHeight:20
+      },
+    },
     toolbox: {
       feature: {
         restore: {
-          title: "",
+          title: ""
         },
       },
     },
@@ -81,7 +87,7 @@ const Echart = ({ timeSelect, handleRestore }) => {
       valueFormatter: (value) => value.toFixed(2) + "%",
     },
     grid: {
-      left: "6%",
+      left: "4%",
       right: "4%",
       bottom: "3%",
       containLabel: true,
@@ -165,11 +171,7 @@ const Echart = ({ timeSelect, handleRestore }) => {
     <>
       <Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Box>
-            <Typography mt={1} sx={{ textAlign: "start", fontWeight: "bold" }}>
-              อัตราผลตอบแทน
-            </Typography>
-          </Box>
+      
         </Box>
         <Box>
           <ReactEcharts
